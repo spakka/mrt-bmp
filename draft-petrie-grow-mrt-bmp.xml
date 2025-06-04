@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="US-ASCII"?>
+<!-- This template is for creating an Internet Draft using xml2rfc,
+     which is available here: http://xml.resource.org. -->
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
+<!-- One method to get references from the online citation libraries.
+     There has to be one entity for each item to be referenced. 
+     An alternate method (rfc include) is described in the references. -->
+
+<!ENTITY RFC6396 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.6396.xml">
+<!ENTITY RFC7854 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7854.xml">
+]>
+<?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
+<!-- used by XSLT processors -->
+<!-- For a complete list and description of processing instructions (PIs), 
+     please see http://xml.resource.org/authoring/README.html. -->
+<!-- Below are generally applicable Processing Instructions (PIs) that most I-Ds might want to use.
+     (Here they are set differently than their defaults in xml2rfc v1.32) -->
+<?rfc strict="yes" ?>
+<!-- give errors regarding ID-nits and DTD validation -->
+<!-- control the table of contents (ToC) -->
+<?rfc toc="yes"?>
+<!-- generate a ToC -->
+<?rfc tocdepth="4"?>
+<!-- the number of levels of subsections in ToC. default: 3 -->
+<!-- control references -->
+<?rfc symrefs="yes"?>
+<!-- use symbolic references tags, i.e, [RFC2119] instead of [1] -->
+<?rfc sortrefs="yes" ?>
+<!-- sort the reference entries alphabetically -->
+<!-- control vertical white space 
+     (using these PIs as follows is recommended by the RFC Editor) -->
+<?rfc compact="yes" ?>
+<!-- do not start each main section on a new page -->
+<?rfc subcompact="no" ?>
+<!-- keep one blank line between list items -->
+<!-- end of list of popular I-D processing instructions -->
+<rfc category="std" docName="draft-petrie-grow-mrt-bmp-00" ipr="trust200902">
+  <!-- category values: std, bcp, info, exp, and historic
+     ipr values: full3667, noModification3667, noDerivatives3667
+     you can add the attributes updates="NNNN" and obsoletes="NNNN" 
+     they will automatically be output with "(if approved)" -->
+
+  <!-- ***** FRONT MATTER ***** -->
+
+  <front>
+    <!-- The abbreviated title is used in the page header - it is only necessary if the 
+         full title is longer than 39 characters -->
+
+    <title abbrev="BMP in MRT">
+		Storing BMP messages in MRT Format
+	</title>
+    <author fullname="Colin Petrie" initials="C." surname="Petrie">
+    	<organization>NTT</organization>
+      	<address>
+        	<postal>
+				<street>Veemweg 23</street>
+          		<city>Barneveld</city>
+                <code>3771 MT</code>
+          		<country>NL</country>
+        	</postal>
+        	<email>colin@ntt.net</email>
+      	</address>
+    </author>
+
+    <date month="June" year="2025" />
+
+    <!-- If the month and year are both specified and are the current ones, xml2rfc will fill 
+         in the current day for you. If only the current year is specified, xml2rfc will fill 
+	 in the current day and month for you. If the year is not the current one, it is 
+	 necessary to specify at least a month (xml2rfc assumes day="1" if not specified for the 
+	 purpose of calculating the expiry date).  With drafts it is normally sufficient to 
+	 specify just the year. -->
+
+    <!-- Meta-data Declarations -->
+
+    <area>Operations and Management</area>
+
+    <workgroup>Global Routing Operations</workgroup>
+
+    <!-- WG name at the upperleft corner of the doc,
+         IETF is fine for individual submissions.  
+	 If this element is not present, the default is "Network Working Group",
+         which is used by the RFC Editor as a nod to the history of the IETF. -->
+
+    <keyword>MRT</keyword>
+    <keyword>BMP</keyword>
+
+    <!-- Keywords will be incorporated into HTML output
+         files in a meta tag but they have no effect on text or nroff
+         output. If you submit your draft to the RFC Editor, the
+         keywords will be used for the search engine. -->
+
+    <abstract>
+    <t>
+    	This document extends the Multi-threaded Routing Toolkit (MRT)
+		export format to support the storage of BMP messages.
+	</t>
+    </abstract>
+  </front>
+
+  <middle>
+    <section anchor="intro" title="Introduction">
+    <t>
+      	The <xref target="RFC6396">MRT record format</xref> was developed to provide researchers
+      	and engineers a means to encapsulate, export, and archive routing protocol transactions
+      	and routing information base snapshots.
+	</t>
+	<t>
+		<xref target="RFC7854">BMP</xref> was developed to monitor BGP sessions, and also includes messages containing
+		routing protocol transactions and Routing Information Base contents and changes. <xref target="RFC7854">BMP</xref> does not define a mechanism
+		for exporting and archiving BMP messages. MRT can be a suitable format for this.
+	</t>
+	<t>
+		This document contains an optional extension to the MRT format <xref target="RFC6396"/>
+		and defines additional MRT types to permit storage of BMP messages.
+	</t>
+
+    </section>
+
+    <section anchor="bmp-types" title="BMP Type">
+	<t>
+		This document defines the following new MRT Types:
+		<list style="symbols">
+			<t>BMP</t>
+			<t>BMP_ET</t>
+		</list>
+	</t>
+	<t>
+            These MRT types support the BMP protocol. They are used to encode the exchange of BMP messages. 
+            The _ET variant is for use with the Extended Timestamp MRT Header.
+	</t>
+        <figure anchor="BMP-MRT-format" align="center">
+			<preamble>The format of the MRT Message field for the BMP types is as follows:</preamble>
+        	<artwork align="center">
+                    <![CDATA[
+ 0                   1                   2                   3
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|        Address Family           |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                   Remote IP Address (variable)                |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                   Local IP Address (variable)                 |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                  BMP Message Contents (variable)
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+                    ]]>
+		</artwork>
+	</figure>
+
+    <t>
+    The Address Family indicates what types of addresses
+   are in the subsequent address fields.  At present, the following AFI
+   Types are supported:
+	 <list style="empty">
+
+					 <t>1 - AFI_IPv4</t>
+					 <t>2 - AFI_IPv6</t>
+
+	 </list>
+   The Address Family value only applies to the IP addresses contained
+	 in the MRT header. The BMP type is otherwise transparent to the contents of the actual
+	 message that may contain any valid AFI/SAFI values.
+	 </t>
+	 <t> Remote and Local IP addresses refer to the endpoints of the TCP connection carrying the BMP session, from the perspective
+		 of the BMP monitoring station that is recording these messages</t>
+	 </section>
+
+ <section title="IANA Considerations">	
+
+
+	<t>
+        This document requests that IANA assign Type codes to the <eref target="https://www.iana.org/assignments/mrt/mrt.xhtml">MRT name space</eref>:
+        <list style="empty">
+                <t>BMP = TBD1 (<xref target="bmp-types"/>)</t>
+                <t>BMP_ET = TBD2 (<xref target="bmp-types"/>)</t>
+            </list>
+	In this draft document this is requested from the Specification Required range, this may be changed to the IETF Review range
+	by a later version of this document.
+	</t>
+   	</section>
+
+    <section anchor="Security" title="Security Considerations">
+	<t>
+		It is not believed that this document adds any additional security considerations.
+	</t>
+	<t>
+		However, the security considerations of <xref target="RFC6396"/> and <xref target="RFC7854"/> 
+		are equally applicable to this document.
+	</t>
+    </section>
+
+  </middle>
+
+  <back>
+    <!-- References split into informative and normative -->
+
+    <!-- There are 2 ways to insert reference entries from the citation libraries:
+     1. define an ENTITY at the top, and use "ampersand character"RFC2629; here (as shown)
+     2. simply use a PI "less than character"?rfc include="reference.RFC.2119.xml"?> here
+        (for I-Ds: include="reference.I-D.narten-iana-considerations-rfc2434bis.xml")
+
+     Both are cited textually in the same manner: by using xref elements.
+     If you use the PI option, xml2rfc will, by default, try to find included files in the same
+     directory as the including file. You can also define the XML_LIBRARY environment variable
+     with a value containing a set of directories to search.  These can be either in the local
+     filing system or remote ones accessed by http (http://domain/dir/... ).-->
+
+    <references title="Normative References">
+      &RFC6396;
+      &RFC7854;
+    </references>
+
+  </back>
+</rfc>
