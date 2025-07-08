@@ -4,8 +4,9 @@
 
 Global Routing Operations                                      C. Petrie
 Internet-Draft                                                       NTT
-Intended status: Standards Track                               June 2025
-Expires: 6 December 2025
+Intended status: Standards Track                             L. Hendriks
+Expires: 9 January 2026                                       NLnet Labs
+                                                             8 July 2025
 
 
                    Storing BMP messages in MRT Format
@@ -31,7 +32,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 3 December 2025.
+   This Internet-Draft will expire on 9 January 2026.
 
 Copyright Notice
 
@@ -52,10 +53,9 @@ Copyright Notice
 
 
 
-
-Petrie                   Expires 6 December 2025                [Page 1]
+Petrie & Hendriks        Expires 9 January 2026                 [Page 1]
 
-Internet-Draft                 BMP in MRT                      June 2025
+Internet-Draft                 BMP in MRT                      July 2025
 
 
 Table of Contents
@@ -65,7 +65,7 @@ Table of Contents
    3.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   3
    4.  Security Considerations . . . . . . . . . . . . . . . . . . .   4
    5.  Normative References  . . . . . . . . . . . . . . . . . . . .   4
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .   4
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   4
 
 1.  Introduction
 
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Petrie                   Expires 6 December 2025                [Page 2]
+Petrie & Hendriks        Expires 9 January 2026                 [Page 2]
 
-Internet-Draft                 BMP in MRT                      June 2025
+Internet-Draft                 BMP in MRT                      July 2025
 
 
       0                   1                   2                   3
@@ -165,9 +165,9 @@ Internet-Draft                 BMP in MRT                      June 2025
 
 
 
-Petrie                   Expires 6 December 2025                [Page 3]
+Petrie & Hendriks        Expires 9 January 2026                 [Page 3]
 
-Internet-Draft                 BMP in MRT                      June 2025
+Internet-Draft                 BMP in MRT                      July 2025
 
 
 4.  Security Considerations
@@ -190,7 +190,7 @@ Internet-Draft                 BMP in MRT                      June 2025
               DOI 10.17487/RFC7854, June 2016,
               <https://www.rfc-editor.org/info/rfc7854>.
 
-Author's Address
+Authors' Addresses
 
    Colin Petrie
    NTT
@@ -200,6 +200,12 @@ Author's Address
    Email: colin@ntt.net
 
 
+   Luuk Hendriks
+   NLnet Labs
+   Science Park 400
+   1098 XH Amsterdam
+   Netherlands
+   Email: luuk@nlnetlabs.nl
 
 
 
@@ -215,10 +221,4 @@ Author's Address
 
 
 
-
-
-
-
-
-
-Petrie                   Expires 6 December 2025                [Page 4]
+Petrie & Hendriks        Expires 9 January 2026                 [Page 4]
