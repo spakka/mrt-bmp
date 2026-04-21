@@ -8,6 +8,8 @@
 
 <!ENTITY RFC6396 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.6396.xml">
 <!ENTITY RFC7854 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7854.xml">
+<!ENTITY I-D.ietf-grow-bmp-tlv SYSTEM "https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-grow-bmp-tlv.xml">
+<!ENTITY I-D.lucente-grow-bmp-offline SYSTEM "https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.lucente-grow-bmp-offline.xml">
 ]>
 <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
 <!-- used by XSLT processors -->
@@ -34,7 +36,7 @@
 <?rfc subcompact="no" ?>
 <!-- keep one blank line between list items -->
 <!-- end of list of popular I-D processing instructions -->
-<rfc category="std" docName="draft-petrie-grow-mrt-bmp-00" ipr="trust200902">
+<rfc category="std" docName="draft-petrie-grow-mrt-bmp-02" ipr="trust200902">
   <!-- category values: std, bcp, info, exp, and historic
      ipr values: full3667, noModification3667, noDerivatives3667
      you can add the attributes updates="NNNN" and obsoletes="NNNN" 
@@ -74,7 +76,7 @@
       </address>
     </author>
 
-    <date year="2025" />
+    <date year="2026" />
 
     <!-- If the month and year are both specified and are the current ones, xml2rfc will fill 
          in the current day for you. If only the current year is specified, xml2rfc will fill 
@@ -126,6 +128,27 @@
 		This document contains an optional extension to the MRT format <xref target="RFC6396"/>
 		and defines additional MRT types to permit storage of BMP messages.
 	</t>
+
+	<section anchor="stateless-considerations" title="Stateless Message Parsing considerations">
+	<t>
+			Previous BGP support in <xref target="RFC6396">MRT</xref> has required new sub-types to be introduced
+			every time a new BGP capability is introduced that alters the wire format of the BGP packets. This
+			meta-information signals to the parser how to decode the packet.
+	</t>
+	<t>
+			In the case of this proposed BMP support, the intention is to offload this meta-information to the 
+			in-protocol BMP implmentations. The current implementations described are <xref target="I-D.ietf-grow-bmp-tlv">
+			Stateless Parsing TLVs</xref> and <xref target="I-D.lucente-grow-bmp-offline">Snapshot Messages</xref>.
+	</t>
+	<t>
+			It is expected that the producer of MRT files containing BMP data will ensure that these mechanisms are used
+			to make the data in the file parseable.
+	</t>
+	<t>
+			As a result, this document does not define any MRT sub-types, BMP messages are encapsulated only using an outer
+			MRT type to indicate that the enclosed messages are BMP messages
+	</t>
+	</section>
 
     </section>
 
@@ -221,6 +244,8 @@
     <references title="Normative References">
       &RFC6396;
       &RFC7854;
+	  &I-D.ietf-grow-bmp-tlv;
+	  &I-D.lucente-grow-bmp-offline;
     </references>
 
   </back>

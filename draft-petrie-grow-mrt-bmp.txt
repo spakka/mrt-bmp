@@ -5,12 +5,12 @@
 Global Routing Operations                                      C. Petrie
 Internet-Draft                                                       NTT
 Intended status: Standards Track                             L. Hendriks
-Expires: 9 January 2026                                       NLnet Labs
-                                                             8 July 2025
+Expires: 23 October 2026                                      NLnet Labs
+                                                           21 April 2026
 
 
                    Storing BMP messages in MRT Format
-                      draft-petrie-grow-mrt-bmp-00
+                      draft-petrie-grow-mrt-bmp-02
 
 Abstract
 
@@ -32,11 +32,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 9 January 2026.
+   This Internet-Draft will expire on 23 October 2026.
 
 Copyright Notice
 
-   Copyright (c) 2025 IETF Trust and the persons identified as the
+   Copyright (c) 2026 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -53,19 +53,20 @@ Copyright Notice
 
 
 
-Petrie & Hendriks        Expires 9 January 2026                 [Page 1]
+Petrie & Hendriks        Expires 23 October 2026                [Page 1]
 
-Internet-Draft                 BMP in MRT                      July 2025
+Internet-Draft                 BMP in MRT                     April 2026
 
 
 Table of Contents
 
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
-   2.  BMP Type  . . . . . . . . . . . . . . . . . . . . . . . . . .   2
-   3.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   3
+     1.1.  Stateless Message Parsing considerations  . . . . . . . .   2
+   2.  BMP Type  . . . . . . . . . . . . . . . . . . . . . . . . . .   3
+   3.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   4
    4.  Security Considerations . . . . . . . . . . . . . . . . . . .   4
    5.  Normative References  . . . . . . . . . . . . . . . . . . . .   4
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   4
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   5
 
 1.  Introduction
 
@@ -83,6 +84,36 @@ Table of Contents
    [RFC6396] and defines additional MRT types to permit storage of BMP
    messages.
 
+1.1.  Stateless Message Parsing considerations
+
+   Previous BGP support in MRT [RFC6396] has required new sub-types to
+   be introduced every time a new BGP capability is introduced that
+   alters the wire format of the BGP packets.  This meta-information
+   signals to the parser how to decode the packet.
+
+   In the case of this proposed BMP support, the intention is to offload
+   this meta-information to the in-protocol BMP implmentations.  The
+   current implementations described are Stateless Parsing TLVs
+   [I-D.ietf-grow-bmp-tlv] and Snapshot Messages
+   [I-D.lucente-grow-bmp-offline].
+
+   It is expected that the producer of MRT files containing BMP data
+   will ensure that these mechanisms are used to make the data in the
+   file parseable.
+
+   As a result, this document does not define any MRT sub-types, BMP
+   messages are encapsulated only using an outer MRT type to indicate
+   that the enclosed messages are BMP messages
+
+
+
+
+
+Petrie & Hendriks        Expires 23 October 2026                [Page 2]
+
+Internet-Draft                 BMP in MRT                     April 2026
+
+
 2.  BMP Type
 
    This document defines the following new MRT Types:
@@ -96,22 +127,6 @@ Table of Contents
    Extended Timestamp MRT Header.
 
    The format of the MRT Message field for the BMP types is as follows:
-
-
-
-
-
-
-
-
-
-
-
-
-
-Petrie & Hendriks        Expires 9 January 2026                 [Page 2]
-
-Internet-Draft                 BMP in MRT                      July 2025
 
 
       0                   1                   2                   3
@@ -146,6 +161,15 @@ Internet-Draft                 BMP in MRT                      July 2025
    connection carrying the BMP session, from the perspective of the BMP
    monitoring station that is recording these messages
 
+
+
+
+
+Petrie & Hendriks        Expires 23 October 2026                [Page 3]
+
+Internet-Draft                 BMP in MRT                     April 2026
+
+
 3.  IANA Considerations
 
    This document requests that IANA assign Type codes to the MRT name
@@ -159,17 +183,6 @@ Internet-Draft                 BMP in MRT                      July 2025
    Required range, this may be changed to the IETF Review range by a
    later version of this document.
 
-
-
-
-
-
-
-Petrie & Hendriks        Expires 9 January 2026                 [Page 3]
-
-Internet-Draft                 BMP in MRT                      July 2025
-
-
 4.  Security Considerations
 
    It is not believed that this document adds any additional security
@@ -180,6 +193,20 @@ Internet-Draft                 BMP in MRT                      July 2025
 
 5.  Normative References
 
+   [I-D.ietf-grow-bmp-tlv]
+              Lucente, P., Gu, Y., Younsi, M., and P. Francois, "BMP v4:
+              Extended TLV Support for BGP Monitoring Protocol (BMP)",
+              Work in Progress, Internet-Draft, draft-ietf-grow-bmp-tlv-
+              20, 2 March 2026, <https://datatracker.ietf.org/doc/html/
+              draft-ietf-grow-bmp-tlv-20>.
+
+   [I-D.lucente-grow-bmp-offline]
+              Hendriks, L., Lucente, P., Cardona, C., and C. Petrie,
+              "BMP Snapshots", Work in Progress, Internet-Draft, draft-
+              lucente-grow-bmp-offline-03, 21 April 2026,
+              <https://datatracker.ietf.org/doc/html/draft-lucente-grow-
+              bmp-offline-03>.
+
    [RFC6396]  Blunk, L., Karir, M., and C. Labovitz, "Multi-Threaded
               Routing Toolkit (MRT) Routing Information Export Format",
               RFC 6396, DOI 10.17487/RFC6396, October 2011,
@@ -189,6 +216,15 @@ Internet-Draft                 BMP in MRT                      July 2025
               Monitoring Protocol (BMP)", RFC 7854,
               DOI 10.17487/RFC7854, June 2016,
               <https://www.rfc-editor.org/info/rfc7854>.
+
+
+
+
+
+Petrie & Hendriks        Expires 23 October 2026                [Page 4]
+
+Internet-Draft                 BMP in MRT                     April 2026
+
 
 Authors' Addresses
 
@@ -221,4 +257,24 @@ Authors' Addresses
 
 
 
-Petrie & Hendriks        Expires 9 January 2026                 [Page 4]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Petrie & Hendriks        Expires 23 October 2026                [Page 5]
